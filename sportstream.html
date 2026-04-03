@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>SportStream — Every Game. One Platform.</title>
+  <meta name="description" content="Watch live sports in 4K Ultra HD. Football, Cricket, UFC, Basketball, Baseball, MMA — all on one platform.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #06060a;
+      color: #f0f0f5;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; border: none; outline: none; }
+    input { font-family: inherit; outline: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ========== CUSTOM SCROLLBAR ========== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06060a; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes float1 {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      25% { transform: translate(80px,-60px) scale(1.1); }
+      50% { transform: translate(-40px,-120px) scale(0.95); }
+      75% { transform: translate(60px,-40px) scale(1.05); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      25% { transform: translate(-60px,80px) scale(1.08); }
+      50% { transform: translate(100px,40px) scale(0.92); }
+      75% { transform: translate(-80px,-60px) scale(1.02); }
+    }
+    @keyframes float3 {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      33% { transform: translate(50px,90px) scale(1.12); }
+      66% { transform: translate(-70px,-30px) scale(0.9); }
+    }
+    @keyframes pulseGlow { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    @keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(100vh); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+    @keyframes slideInRight { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(120%); opacity: 0; } }
+    @keyframes checkCircle { 0% { stroke-dashoffset: 166; } 100% { stroke-dashoffset: 0; } }
+    @keyframes checkDraw { 0% { stroke-dashoffset: 48; } 100% { stroke-dashoffset: 0; } }
+    @keyframes progressFill {
+      0% { width: 0%; }
+      15% { width: 20%; }
+      40% { width: 50%; }
+      65% { width: 75%; }
+      85% { width: 90%; }
+      100% { width: 95%; }
+    }
+
+    .orb1 { animation: float1 18s ease-in-out infinite; }
+    .orb2 { animation: float2 22s ease-in-out infinite; }
+    .orb3 { animation: float3 15s ease-in-out infinite; }
+    .pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
+    .spinner { animation: spin 1s linear infinite; }
+    .anim-fade-in { animation: fadeIn 0.3s ease forwards; }
+    .anim-fade-out { animation: fadeOut 0.3s ease forwards; }
+    .toast-enter { animation: slideInRight 0.4s ease forwards; }
+    .toast-exit { animation: slideOutRight 0.4s ease forwards; }
+
+    /* ========== SCROLL REVEAL ========== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========== GLASSMORPHISM ========== */
+    .glass-card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+    }
+    .glass-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.14);
+    }
+
+    /* ========== CTA BUTTON ========== */
+    .btn-signup {
+      height: 48px;
+      padding: 0 32px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #e53e3e, #c53030);
+      color: white;
+      font-weight: 600;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(229,62,62,0.4);
+      white-space: nowrap;
+    }
+    .btn-signup:hover {
+      background: linear-gradient(135deg, #fc5c5c, #e53e3e);
+      box-shadow: 0 6px 30px rgba(229,62,62,0.5);
+      transform: translateY(-1px);
+    }
+    .btn-signup:active { transform: translateY(0); }
+
+    /* ========== GRADIENT BORDER VIDEO PLAYER ========== */
+    .gradient-border-glow {
+      position: relative;
+      border-radius: 16px;
+      padding: 2px;
+      background: linear-gradient(135deg, #e53e3e, #805ad5, #3182ce);
+      box-shadow: 0 0 30px rgba(229,62,62,0.3), 0 0 60px rgba(128,90,213,0.2), 0 0 90px rgba(49,130,206,0.15);
+    }
+    .gradient-border-glow > div {
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ========== SCANLINE ========== */
+    .scanline-effect {
+      background: repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 3px);
+    }
+    .scanline-move::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.04), transparent);
+      animation: scanline 4s linear infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ========== MODAL ========== */
+    .modal-backdrop {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      background: rgba(0,0,0,0.7);
+    }
+    .checkmark-circle { stroke-dasharray: 166; stroke-dashoffset: 166; animation: checkCircle 0.6s ease-in-out forwards; }
+    .checkmark-check { stroke-dasharray: 48; stroke-dashoffset: 48; animation: checkDraw 0.4s ease-in-out 0.4s forwards; }
+
+    /* ========== PROGRESS BAR ========== */
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(to right, #e53e3e, #805ad5, #3182ce);
+      animation: progressFill 4s cubic-bezier(0.4,0,0.2,1) forwards;
+    }
+
+    /* ========== LAYOUT ========== */
+    .container { max-width: 1152px; margin: 0 auto; padding: 0 16px; }
+    @media (min-width: 640px) { .container { padding: 0 24px; } }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 767px) {
+      .desktop-only { display: none !important; }
+    }
+    @media (min-width: 768px) {
+      .mobile-only { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================================ -->
+  <!--  BACKGROUND ORBS                                                  -->
+  <!-- ================================================================ -->
+  <div style="position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;" aria-hidden="true">
+    <div class="orb1" style="position:absolute;top:-20%;left:-10%;width:600px;height:600px;border-radius:50%;background:rgba(220,38,38,0.15);filter:blur(128px);"></div>
+    <div class="orb2" style="position:absolute;top:30%;right:-15%;width:500px;height:500px;border-radius:50%;background:rgba(147,51,234,0.15);filter:blur(128px);"></div>
+    <div class="orb3" style="position:absolute;bottom:-10%;left:30%;width:550px;height:550px;border-radius:50%;background:rgba(37,99,235,0.1);filter:blur(128px);"></div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  NAVBAR                                                           -->
+  <!-- ================================================================ -->
+  <nav id="navbar" style="position:fixed;top:0;left:0;right:0;z-index:50;transition:all 0.3s ease;">
+    <div class="container" style="height:64px;display:flex;align-items:center;justify-content:space-between;">
+      <!-- Logo -->
+      <div style="font-size:1.25rem;font-weight:700;background:linear-gradient(to right,#ef4444,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">SportStream</div>
+
+      <!-- Desktop links -->
+      <div class="desktop-only" style="display:flex;align-items:center;gap:32px;">
+        <a href="#sports" style="font-size:0.875rem;color:rgba(255,255,255,0.6);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Sports</a>
+        <a href="#live" style="font-size:0.875rem;color:rgba(255,255,255,0.6);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Live</a>
+        <a href="#features" style="font-size:0.875rem;color:rgba(255,255,255,0.6);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Features</a>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="btn-signup desktop-only" style="font-size:0.875rem;" onclick="openModal()">Sign Up / Sign In</button>
+        <!-- Mobile hamburger -->
+        <button class="mobile-only" onclick="toggleMobileMenu()" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(255,255,255,0.05);">
+          <svg id="menuIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg id="closeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="mobile-only" style="display:none;background:rgba(0,0,0,0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,0.05);">
+      <div style="padding:16px;display:flex;flex-direction:column;gap:12px;">
+        <a href="#sports" onclick="closeMobileMenu()" style="font-size:0.875rem;color:rgba(255,255,255,0.7);padding:8px 0;">Sports</a>
+        <a href="#live" onclick="closeMobileMenu()" style="font-size:0.875rem;color:rgba(255,255,255,0.7);padding:8px 0;">Live</a>
+        <a href="#features" onclick="closeMobileMenu()" style="font-size:0.875rem;color:rgba(255,255,255,0.7);padding:8px 0;">Features</a>
+        <button class="btn-signup" style="font-size:0.875rem;width:100%;" onclick="closeMobileMenu();openModal();">Sign Up / Sign In</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================================================================ -->
+  <!--  HERO SECTION                                                     -->
+  <!-- ================================================================ -->
+  <section class="reveal" style="padding:128px 16px 64px;text-align:center;position:relative;z-index:1;">
+    <div style="max-width:768px;margin:0 auto;">
+      <h1 style="font-size:clamp(2.25rem,6vw,4.5rem);font-weight:900;letter-spacing:-0.02em;line-height:1.1;margin-bottom:24px;">
+        <span style="background:linear-gradient(to right,#fff,#fff,rgba(255,255,255,0.7));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Every Game.</span><br>
+        <span style="background:linear-gradient(to right,#ef4444,#a855f7,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">One Platform.</span>
+      </h1>
+      <p style="font-size:clamp(1rem,2.5vw,1.25rem);color:rgba(255,255,255,0.5);max-width:640px;margin:0 auto 32px;">
+        Stream live sports in stunning 4K Ultra HD. Football, Cricket, UFC, Basketball and more — all in one place.
+      </p>
+      <button class="btn-signup" style="font-size:1rem;padding:0 40px;" onclick="openModal()">Sign Up / Sign In</button>
+
+      <!-- Stats -->
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;margin-top:40px;">
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span style="font-size:0.875rem;color:rgba(255,255,255,0.7);" id="heroViewers">10,000 watching now</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>
+          <span style="font-size:0.875rem;color:rgba(255,255,255,0.7);font-weight:500;">4K HDR</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span style="font-size:0.875rem;color:rgba(255,255,255,0.7);">99.9% Uptime</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  VIDEO PLAYER                                                     -->
+  <!-- ================================================================ -->
+  <section class="reveal" style="padding:0 16px 64px;position:relative;z-index:1;">
+    <div class="container">
+      <div class="gradient-border-glow">
+        <div style="position:relative;aspect-ratio:16/9;cursor:pointer;background:#000;overflow:hidden;" class="scanline-effect scanline-move" id="videoPlayer" onclick="handlePlayClick()">
+          <!-- Top badges -->
+          <div style="position:absolute;top:0;left:0;right:0;padding:16px;display:flex;align-items:flex-start;justify-content:space-between;z-index:5;">
+            <div style="display:flex;gap:8px;">
+              <div style="display:flex;align-items:center;gap:6px;background:#dc2626;padding:4px 10px;border-radius:6px;">
+                <span class="pulse-glow" style="width:8px;height:8px;border-radius:50%;background:#fff;display:inline-block;"></span>
+                <span style="color:#fff;font-size:0.75rem;font-weight:600;letter-spacing:0.05em;">LIVE</span>
+              </div>
+              <div style="padding:4px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.05);">
+                <span style="color:rgba(255,255,255,0.8);font-size:0.75rem;font-weight:600;letter-spacing:0.05em;">4K UHD</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(0,0,0,0.4);backdrop-filter:blur(8px);padding:4px 10px;border-radius:6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span style="color:rgba(255,255,255,0.8);font-size:0.75rem;font-weight:500;" id="playerViewers">10,000</span>
+            </div>
+          </div>
+
+          <!-- Play button -->
+          <div id="playBtn" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:4;transition:opacity 0.3s ease;">
+            <div style="width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;transition:background 0.3s ease;">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <p style="color:rgba(255,255,255,0.5);font-size:0.875rem;margin-top:12px;">Click to watch live</p>
+          </div>
+
+          <!-- Loading overlay -->
+          <div id="loadingOverlay" style="display:none;position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:6;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);">
+            <div class="spinner" style="width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,0.1);border-top-color:rgba(255,255,255,0.8);margin-bottom:20px;"></div>
+            <p id="loadingText" style="color:rgba(255,255,255,0.9);font-size:0.875rem;font-weight:500;margin-bottom:16px;">Connecting to stream...</p>
+            <div style="width:192px;height:4px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;">
+              <div id="progressBar" class="progress-bar-fill"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  COUNTDOWN TIMER                                                  -->
+  <!-- ================================================================ -->
+  <section class="reveal" style="padding:0 16px 64px;position:relative;z-index:1;">
+    <div class="container">
+      <div class="glass-card" style="max-width:640px;margin:0 auto;padding:32px;text-align:center;">
+        <h2 style="font-size:clamp(1.125rem,2.5vw,1.25rem);font-weight:600;color:#fff;margin-bottom:8px;">Next Live Event Starts In</h2>
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:24px 0;" id="countdown">
+          <div style="text-align:center;">
+            <div class="cd-val" style="font-size:clamp(1.875rem,5vw,3rem);font-weight:700;color:#fff;font-variant-numeric:tabular-nums;">00</div>
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:4px;text-transform:uppercase;letter-spacing:0.1em;">Days</div>
+          </div>
+          <span style="font-size:clamp(1.5rem,4vw,1.875rem);font-weight:700;color:rgba(255,255,255,0.2);margin-top:-16px;">:</span>
+          <div style="text-align:center;">
+            <div class="cd-val" style="font-size:clamp(1.875rem,5vw,3rem);font-weight:700;color:#fff;font-variant-numeric:tabular-nums;">00</div>
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:4px;text-transform:uppercase;letter-spacing:0.1em;">Hours</div>
+          </div>
+          <span style="font-size:clamp(1.5rem,4vw,1.875rem);font-weight:700;color:rgba(255,255,255,0.2);margin-top:-16px;">:</span>
+          <div style="text-align:center;">
+            <div class="cd-val" style="font-size:clamp(1.875rem,5vw,3rem);font-weight:700;color:#fff;font-variant-numeric:tabular-nums;">00</div>
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:4px;text-transform:uppercase;letter-spacing:0.1em;">Min</div>
+          </div>
+          <span style="font-size:clamp(1.5rem,4vw,1.875rem);font-weight:700;color:rgba(255,255,255,0.2);margin-top:-16px;">:</span>
+          <div style="text-align:center;">
+            <div class="cd-val" style="font-size:clamp(1.875rem,5vw,3rem);font-weight:700;color:#fff;font-variant-numeric:tabular-nums;">00</div>
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:4px;text-transform:uppercase;letter-spacing:0.1em;">Sec</div>
+          </div>
+        </div>
+        <button class="btn-signup" style="margin-bottom:12px;" onclick="openModal()">Sign Up / Sign In</button>
+        <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);">Join thousands of fans already streaming live sports</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  TRUST BAR                                                        -->
+  <!-- ================================================================ -->
+  <section class="reveal" style="padding:0 16px 64px;position:relative;z-index:1;">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
+        <div class="glass-card" style="padding:20px;text-align:center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" style="margin:0 auto 12px;display:block;"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>
+          <h3 style="font-size:0.875rem;font-weight:600;color:#fff;margin-bottom:4px;">4K Ultra HD</h3>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.4);">Crystal clear streaming quality</p>
+        </div>
+        <div class="glass-card" style="padding:20px;text-align:center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" style="margin:0 auto 12px;display:block;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <h3 style="font-size:0.875rem;font-weight:600;color:#fff;margin-bottom:4px;">Secure Access</h3>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.4);">Enterprise-grade encryption</p>
+        </div>
+        <div class="glass-card" style="padding:20px;text-align:center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" style="margin:0 auto 12px;display:block;"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+          <h3 style="font-size:0.875rem;font-weight:600;color:#fff;margin-bottom:4px;">Multi-Device</h3>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.4);">Watch on any device</p>
+        </div>
+        <div class="glass-card" style="padding:20px;text-align:center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" style="margin:0 auto 12px;display:block;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <h3 style="font-size:0.875rem;font-weight:600;color:#fff;margin-bottom:4px;">Zero Lag</h3>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.4);">Ultra-low latency streams</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  SPORT CATEGORIES                                                 -->
+  <!-- ================================================================ -->
+  <section id="sports" class="reveal" style="padding:0 16px 64px;position:relative;z-index:1;">
+    <div class="container">
+      <h2 style="font-size:clamp(1.5rem,4vw,1.875rem);font-weight:700;color:#fff;text-align:center;margin-bottom:40px;">Browse by Sport</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+        <!-- Football -->
+        <div style="position:relative;border-radius:16px;overflow:hidden;cursor:pointer;min-height:180px;transition:transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,#22c55e,#059669);"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8),rgba(0,0,0,0.2));"></div>
+          <div style="position:relative;z-index:2;padding:24px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              <div style="display:flex;align-items:center;gap:6px;background:#dc2626;padding:2px 8px;border-radius:4px;">
+                <span class="pulse-glow" style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;"></span>
+                <span style="font-size:11px;font-weight:600;color:#fff;">3 Live</span>
+              </div>
+            </div>
+            <h3 style="font-size:1.25rem;font-weight:700;color:#fff;">Football</h3>
+            <p style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-top:4px;">142 this month</p>
+          </div>
+        </div>
+        <!-- Cricket -->
+        <div style="position:relative;border-radius:16px;overflow:hidden;cursor:pointer;min-height:180px;transition:transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,#14b8a6,#0f766e);"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8),rgba(0,0,0,0.2));"></div>
+          <div style="position:relative;z-index:2;padding:24px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 7 7 7 7"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5C17 4 17 7 17 7"/><path d="M4 22h16"/><path d="M10 22V12h4v10"/></svg>
+              <div style="display:flex;align-items:center;gap:6px;background:#dc2626;padding:2px 8px;border-radius:4px;">
+                <span class="pulse-glow" style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;"></span>
+                <span style="font-size:11px;font-weight:600;color:#fff;">2 Live</span>
+              </div>
+            </div>
+            <h3 style="font-size:1.25rem;font-weight:700;color:#fff;">Cricket</h3>
+            <p style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-top:4px;">98 this month</p>
+          </div>
+        </div>
+        <!-- UFC -->
+        <div style="position:relative;border-radius:16px;overflow:hidden;cursor:pointer;min-height:180px;transition:transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,#ef4444,#991b1b);"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8),rgba(0,0,0,0.2));"></div>
+          <div style="position:relative;z-index:2;padding:24px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2"><path d="m14.5 17.5-3-3 3-3"/><path d="m9.5 6.5 3 3-3 3"/></svg>
+              <div style="display:flex;align-items:center;gap:6px;background:#dc2626;padding:2px 8px;border-radius:4px;">
+                <span class="pulse-glow" style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;"></span>
+                <span style="font-size:11px;font-weight:600;color:#fff;">1 Live</span>
+              </div>
+            </div>
+            <h3 style="font-size:1.25rem;font-weight:700;color:#fff;">UFC</h3>
+            <p style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-top:4px;">36 this month</p>
+          </div>
+        </div>
+        <!-- Basketball -->
+        <div style="position:relative;border-radius:16px;overflow:hidden;cursor:pointer;min-height:180px;transition:transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,#f97316,#c2410c);"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8),rgba(0,0,0,0.2));"></div>
+          <div style="position:relative;z-index:2;padding:24px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              <div style="display:flex;align-items:center;gap:6px;background:#dc2626;padding:2px 8px;border-radius:4px;">
+                <span class="pulse-glow" style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;"></span>
+                <span style="font-size:11px;font-weight:600;color:#fff;">4 Live</span>
+              </div>
+            </div>
+            <h3 style="font-size:1.25rem;font-weight:700;color:#fff;">Basketball</h3>
+            <p style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-top:4px;">186 this month</p>
+          </div>
+        </div>
+        <!-- Baseball -->
+        <div style="position:relative;border-radius:16px;overflow:hidden;cursor:pointer;min-height:180px;transition:transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,#3b82f6,#1d4ed8);"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8),rgba(0,0,0,0.2));"></div>
+          <div style="position:relative;z-index:2;padding:24px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              <div style="display:flex;align-items:center;gap:6px;background:#dc2626;padding:2px 8px;border-radius:4px;">
+                <span class="pulse-glow" style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;"></span>
+                <span style="font-size:11px;font-weight:600;color:#fff;">2 Live</span>
+              </div>
+            </div>
+            <h3 style="font-size:1.25rem;font-weight:700;color:#fff;">Baseball</h3>
+            <p style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-top:4px;">124 this month</p>
+          </div>
+        </div>
+        <!-- MMA -->
+        <div style="position:relative;border-radius:16px;overflow:hidden;cursor:pointer;min-height:180px;transition:transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,#a855f7,#7c3aed);"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8),rgba(0,0,0,0.2));"></div>
+          <div style="position:relative;z-index:2;padding:24px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2"><path d="m14.5 17.5-3-3 3-3"/><path d="m9.5 6.5 3 3-3 3"/></svg>
+              <div style="display:flex;align-items:center;gap:6px;background:#dc2626;padding:2px 8px;border-radius:4px;">
+                <span class="pulse-glow" style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;"></span>
+                <span style="font-size:11px;font-weight:600;color:#fff;">1 Live</span>
+              </div>
+            </div>
+            <h3 style="font-size:1.25rem;font-weight:700;color:#fff;">MMA</h3>
+            <p style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-top:4px;">48 this month</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  LIVE EVENTS                                                      -->
+  <!-- ================================================================ -->
+  <section id="live" class="reveal" style="padding:0 16px 64px;position:relative;z-index:1;">
+    <div class="container">
+      <h2 style="font-size:clamp(1.5rem,4vw,1.875rem);font-weight:700;color:#fff;text-align:center;margin-bottom:40px;">Live &amp; Upcoming</h2>
+      <div style="display:grid;grid-template-columns:1fr;gap:16px;">
+        <div class="glass-card" style="padding:24px;display:flex;align-items:center;gap:16px;">
+          <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+              <span style="font-size:0.875rem;font-weight:600;color:#fff;">Football</span>
+              <span style="display:flex;align-items:center;gap:4px;background:#dc2626;padding:2px 8px;border-radius:4px;">
+                <span class="pulse-glow" style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;"></span>
+                <span style="font-size:11px;font-weight:600;color:#fff;">LIVE</span>
+              </span>
+            </div>
+            <p style="font-size:0.875rem;color:rgba(255,255,255,0.4);">4,231 watching</p>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+
+        <div class="glass-card" style="padding:24px;display:flex;align-items:center;gap:16px;">
+          <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><path d="m14.5 17.5-3-3 3-3"/><path d="m9.5 6.5 3 3-3 3"/></svg>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+              <span style="font-size:0.875rem;font-weight:600;color:#fff;">UFC</span>
+              <span style="display:flex;align-items:center;gap:4px;background:#dc2626;padding:2px 8px;border-radius:4px;">
+                <span class="pulse-glow" style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;"></span>
+                <span style="font-size:11px;font-weight:600;color:#fff;">LIVE</span>
+              </span>
+            </div>
+            <p style="font-size:0.875rem;color:rgba(255,255,255,0.4);">8,542 watching</p>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+
+        <div class="glass-card" style="padding:24px;display:flex;align-items:center;gap:16px;">
+          <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 7 7 7 7"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5C17 4 17 7 17 7"/><path d="M4 22h16"/><path d="M10 22V12h4v10"/></svg>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+              <span style="font-size:0.875rem;font-weight:600;color:#fff;">Cricket</span>
+              <span style="display:flex;align-items:center;gap:4px;background:#dc2626;padding:2px 8px;border-radius:4px;">
+                <span class="pulse-glow" style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;"></span>
+                <span style="font-size:11px;font-weight:600;color:#fff;">LIVE</span>
+              </span>
+            </div>
+            <p style="font-size:0.875rem;color:rgba(255,255,255,0.4);">6,109 watching</p>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+
+        <div class="glass-card" style="padding:24px;display:flex;align-items:center;gap:16px;">
+          <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+              <span style="font-size:0.875rem;font-weight:600;color:#fff;">Basketball</span>
+              <span style="background:rgba(255,255,255,0.1);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;color:rgba(255,255,255,0.7);">UPCOMING</span>
+            </div>
+            <p style="font-size:0.875rem;color:rgba(255,255,255,0.4);">Starts in 2h 15m</p>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  FEATURES                                                         -->
+  <!-- ================================================================ -->
+  <section id="features" class="reveal" style="padding:0 16px 64px;position:relative;z-index:1;">
+    <div class="container">
+      <h2 style="font-size:clamp(1.5rem,4vw,1.875rem);font-weight:700;color:#fff;text-align:center;margin-bottom:40px;">Why SportStream?</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+        <div class="glass-card" style="padding:24px;">
+          <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(168,85,247,0.2));display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3 style="font-size:1rem;font-weight:600;color:#fff;margin-bottom:8px;">Instant Access</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.45);line-height:1.6;">Start watching in seconds. No downloads, no waiting.</p>
+        </div>
+        <div class="glass-card" style="padding:24px;">
+          <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(168,85,247,0.2));display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </div>
+          <h3 style="font-size:1rem;font-weight:600;color:#fff;margin-bottom:8px;">Multi-View</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.45);line-height:1.6;">Watch up to 4 games simultaneously on any screen.</p>
+        </div>
+        <div class="glass-card" style="padding:24px;">
+          <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(168,85,247,0.2));display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          </div>
+          <h3 style="font-size:1rem;font-weight:600;color:#fff;margin-bottom:8px;">DVR &amp; Replays</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.45);line-height:1.6;">Never miss a moment with full DVR and instant replays.</p>
+        </div>
+        <div class="glass-card" style="padding:24px;">
+          <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(168,85,247,0.2));display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3 style="font-size:1rem;font-weight:600;color:#fff;margin-bottom:8px;">Real-Time Stats</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.45);line-height:1.6;">Live scores, stats, and analytics while you watch.</p>
+        </div>
+        <div class="glass-card" style="padding:24px;">
+          <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(168,85,247,0.2));display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3 style="font-size:1rem;font-weight:600;color:#fff;margin-bottom:8px;">Multi-Language</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.45);line-height:1.6;">Commentary in 20+ languages for every major event.</p>
+        </div>
+        <div class="glass-card" style="padding:24px;">
+          <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(168,85,247,0.2));display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><path d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"/><line x1="2" y1="20" x2="2.01" y2="20"/></svg>
+          </div>
+          <h3 style="font-size:1rem;font-weight:600;color:#fff;margin-bottom:8px;">Cast Anywhere</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.45);line-height:1.6;">Stream to TV, phone, tablet, or any connected device.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  CTA SECTION                                                      -->
+  <!-- ================================================================ -->
+  <section class="reveal" style="padding:0 16px 64px;position:relative;z-index:1;">
+    <div class="container" style="max-width:768px;">
+      <div class="glass-card" style="padding:clamp(40px,8vw,56px);text-align:center;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(220,38,38,0.05),rgba(168,85,247,0.05),rgba(59,130,246,0.05));pointer-events:none;"></div>
+        <div style="position:relative;z-index:2;">
+          <h2 style="font-size:clamp(1.875rem,5vw,3rem);font-weight:800;color:#fff;margin-bottom:16px;">Ready to Watch?</h2>
+          <p style="font-size:clamp(1rem,2.5vw,1.125rem);color:rgba(255,255,255,0.5);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;">
+            Join millions of fans streaming live sports in stunning quality.
+          </p>
+          <button class="btn-signup" style="font-size:1rem;padding:0 40px;margin-bottom:16px;" onclick="openModal()">Sign Up / Sign In</button>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);">Limited spots available for premium access</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  FOOTER                                                           -->
+  <!-- ================================================================ -->
+  <footer style="position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.05);padding:48px 16px 32px;">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-bottom:40px;">
+        <!-- Brand -->
+        <div style="grid-column:span 2;" class="footer-brand">
+          <div style="font-size:1.125rem;font-weight:700;background:linear-gradient(to right,#ef4444,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px;">SportStream</div>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.4);line-height:1.6;">The ultimate platform for live sports streaming.</p>
+        </div>
+        <!-- Sports -->
+        <div>
+          <h4 style="font-size:0.875rem;font-weight:600;color:#fff;margin-bottom:12px;">Sports</h4>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+            <li><a href="#" style="font-size:0.875rem;color:rgba(255,255,255,0.4);transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">Football</a></li>
+            <li><a href="#" style="font-size:0.875rem;color:rgba(255,255,255,0.4);transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">Cricket</a></li>
+            <li><a href="#" style="font-size:0.875rem;color:rgba(255,255,255,0.4);transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">UFC</a></li>
+            <li><a href="#" style="font-size:0.875rem;color:rgba(255,255,255,0.4);transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">Basketball</a></li>
+            <li><a href="#" style="font-size:0.875rem;color:rgba(255,255,255,0.4);transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">Baseball</a></li>
+            <li><a href="#" style="font-size:0.875rem;color:rgba(255,255,255,0.4);transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">MMA</a></li>
+          </ul>
+        </div>
+        <!-- Company -->
+        <div>
+          <h4 style="font-size:0.875rem;font-weight:600;color:#fff;margin-bottom:12px;">Company</h4>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+            <li><a href="#" style="font-size:0.875rem;color:rgba(255,255,255,0.4);transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">About</a></li>
+            <li><a href="#" style="font-size:0.875rem;color:rgba(255,255,255,0.4);transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">Careers</a></li>
+            <li><a href="#" style="font-size:0.875rem;color:rgba(255,255,255,0.4);transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">Press</a></li>
+            <li><a href="#" style="font-size:0.875rem;color:rgba(255,255,255,0.4);transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">Blog</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid rgba(255,255,255,0.05);padding-top:24px;display:flex;flex-direction:column;align-items:center;gap:16px;">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <!-- X/Twitter -->
+          <a href="#" style="color:rgba(255,255,255,0.3);transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <!-- Instagram -->
+          <a href="#" style="color:rgba(255,255,255,0.3);transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <!-- YouTube -->
+          <a href="#" style="color:rgba(255,255,255,0.3);transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+          <!-- Facebook -->
+          <a href="#" style="color:rgba(255,255,255,0.3);transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+        </div>
+        <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);">&copy; <span id="footerYear"></span> SportStream. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================================================================ -->
+  <!--  TOAST NOTIFICATION                                               -->
+  <!-- ================================================================ -->
+  <div id="toast" style="display:none;position:fixed;bottom:24px;right:24px;z-index:90;">
+    <div class="glass-card" style="padding:12px 8px 12px 12px;display:flex;align-items:center;gap:12px;max-width:320px;">
+      <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#a855f7);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span id="toastAvatar" style="color:#fff;font-size:12px;font-weight:700;">J</span>
+      </div>
+      <p style="font-size:0.875rem;color:rgba(255,255,255,0.7);line-height:1.4;">
+        <span id="toastName" style="font-weight:600;color:#fff;">John</span> from <span id="toastCity">London</span> just signed up
+      </p>
+      <button onclick="dismissToast()" style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,0.05);flex-shrink:0;border:none;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--  SIGNUP MODAL                                                     -->
+  <!-- ================================================================ -->
+  <div id="signupModal" style="display:none;position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;" class="modal-backdrop">
+    <div id="modalInner" style="position:relative;width:100%;max-width:420px;margin:16px;background:rgba(255,255,255,0.04);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:32px;" onclick="event.stopPropagation()">
+      <!-- Close button -->
+      <button onclick="closeModal()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,0.05);border:none;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <!-- Form state -->
+      <div id="modalForm">
+        <div style="text-align:center;margin-bottom:20px;">
+          <div style="font-size:1.5rem;font-weight:700;background:linear-gradient(to right,#ef4444,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">SportStream</div>
+        </div>
+        <div style="text-align:center;margin-bottom:20px;">
+          <h3 style="font-size:1.125rem;font-weight:600;color:#fff;">Sign Up / Sign In</h3>
+        </div>
+
+        <!-- Google -->
+        <button onclick="handleSubmit()" style="width:100%;height:48px;border-radius:8px;background:#fff;color:#111;font-weight:500;font-size:0.875rem;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;transition:background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='#fff'">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Continue with Google
+        </button>
+
+        <!-- Apple -->
+        <button onclick="handleSubmit()" style="width:100%;height:48px;border-radius:8px;background:#fff;color:#111;font-weight:500;font-size:0.875rem;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px;transition:background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='#fff'">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+          Continue with Apple
+        </button>
+
+        <!-- Divider -->
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.1);"></div>
+          <span style="font-size:0.75rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em;">or use email</span>
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.1);"></div>
+        </div>
+
+        <!-- Email -->
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:6px;">Email</label>
+          <input type="email" placeholder="you@example.com" style="width:100%;height:48px;padding:0 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;font-size:0.875rem;transition:border-color 0.2s;" onfocus="this.style.borderColor='rgba(255,255,255,0.25)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+        </div>
+
+        <!-- Password -->
+        <div style="margin-bottom:20px;">
+          <label style="display:block;font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:6px;">Password</label>
+          <input type="password" placeholder="Enter your password" style="width:100%;height:48px;padding:0 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;font-size:0.875rem;transition:border-color 0.2s;" onfocus="this.style.borderColor='rgba(255,255,255,0.25)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+        </div>
+
+        <!-- Submit -->
+        <button onclick="handleSubmit()" class="btn-signup" style="width:100%;margin-bottom:16px;">Sign Up / Sign In</button>
+
+        <!-- Terms -->
+        <p style="text-align:center;font-size:0.75rem;color:rgba(255,255,255,0.3);line-height:1.6;">
+          By continuing, you agree to our <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:underline;">Terms of Service</a> and <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:underline;">Privacy Policy</a>
+        </p>
+      </div>
+
+      <!-- Success state -->
+      <div id="modalSuccess" style="display:none;flex-direction:column;align-items:center;justify-content:center;padding:32px 0;">
+        <svg width="80" height="80" viewBox="0 0 52 52" style="margin-bottom:20px;">
+          <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" stroke="#22c55e" stroke-width="2"/>
+          <path class="checkmark-check" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+        <p style="font-size:1.25rem;font-weight:600;color:#fff;">Welcome aboard!</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================================================================ -->
+  <!--  JAVASCRIPT                                                       -->
+  <!-- ================================================================ -->
+  <script>
+    // ==================== STATE ====================
+    let viewerCount = 10000;
+    let playerState = 'idle'; // idle | connecting | verifying | loading | almost | signin-required
+    let mobileMenuOpen = false;
+    let toastDismissed = false;
+    let toastTimer = null;
+    let toastInterval = null;
+    let playTimeouts = [];
+
+    const toastData = [
+      { name: 'John', city: 'London' },
+      { name: 'Sarah', city: 'New York' },
+      { name: 'Mike', city: 'Tokyo' },
+      { name: 'Emma', city: 'Sydney' },
+      { name: 'Carlos', city: 'Madrid' },
+      { name: 'Aisha', city: 'Dubai' },
+      { name: 'Liam', city: 'Dublin' },
+      { name: 'Priya', city: 'Mumbai' },
+    ];
+    let toastIdx = 0;
+
+    // ==================== INIT ====================
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    // ==================== VIEWER COUNT (every 3s) ====================
+    setInterval(function() {
+      viewerCount = Math.floor(9500 + Math.random() * 1000);
+      document.getElementById('heroViewers').textContent = viewerCount.toLocaleString() + ' watching now';
+      document.getElementById('playerViewers').textContent = viewerCount.toLocaleString();
+    }, 3000);
+
+    // ==================== SCROLL: NAVBAR ====================
+    window.addEventListener('scroll', function() {
+      var nb = document.getElementById('navbar');
+      if (window.scrollY > 20) {
+        nb.style.background = 'rgba(0,0,0,0.6)';
+        nb.style.backdropFilter = 'blur(24px)';
+        nb.style.webkitBackdropFilter = 'blur(24px)';
+        nb.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+      } else {
+        nb.style.background = 'transparent';
+        nb.style.backdropFilter = 'none';
+        nb.style.webkitBackdropFilter = 'none';
+        nb.style.borderBottom = 'none';
+      }
+    }, { passive: true });
+
+    // ==================== SCROLL REVEAL ====================
+    (function() {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) entry.target.classList.add('revealed');
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+    })();
+
+    // ==================== COUNTDOWN ====================
+    (function() {
+      var target = new Date();
+      target.setDate(target.getDate() + 2);
+      target.setHours(target.getHours() + 5);
+      target.setMinutes(target.getMinutes() + 23);
+      var vals = document.querySelectorAll('.cd-val');
+
+      function tick() {
+        var diff = Math.max(0, target.getTime() - Date.now());
+        var d = Math.floor(diff / 86400000);
+        var h = Math.floor((diff % 86400000) / 3600000);
+        var m = Math.floor((diff % 3600000) / 60000);
+        var s = Math.floor((diff % 60000) / 1000);
+        vals[0].textContent = String(d).padStart(2, '0');
+        vals[1].textContent = String(h).padStart(2, '0');
+        vals[2].textContent = String(m).padStart(2, '0');
+        vals[3].textContent = String(s).padStart(2, '0');
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+
+    // ==================== MOBILE MENU ====================
+    function toggleMobileMenu() {
+      mobileMenuOpen = !mobileMenuOpen;
+      document.getElementById('mobileMenu').style.display = mobileMenuOpen ? 'block' : 'none';
+      document.getElementById('menuIcon').style.display = mobileMenuOpen ? 'none' : 'block';
+      document.getElementById('closeIcon').style.display = mobileMenuOpen ? 'block' : 'none';
+    }
+    function closeMobileMenu() {
+      mobileMenuOpen = false;
+      document.getElementById('mobileMenu').style.display = 'none';
+      document.getElementById('menuIcon').style.display = 'block';
+      document.getElementById('closeIcon').style.display = 'none';
+    }
+
+    // ==================== VIDEO PLAYER ====================
+    function handlePlayClick() {
+      if (playerState !== 'idle') return;
+      playerState = 'connecting';
+
+      // Hide play button
+      document.getElementById('playBtn').style.opacity = '0';
+      document.getElementById('playBtn').style.pointerEvents = 'none';
+
+      // Show loading overlay
+      var overlay = document.getElementById('loadingOverlay');
+      overlay.style.display = 'flex';
+
+      // Reset progress bar
+      var pb = document.getElementById('progressBar');
+      pb.style.animation = 'none';
+      pb.offsetHeight; // reflow
+      pb.style.animation = 'progressFill 4s cubic-bezier(0.4,0,0.2,1) forwards';
+
+      // State sequence
+      var texts = ['Connecting to stream...', 'Verifying access...', 'Loading player...', 'Almost ready...', 'Sign in required to continue'];
+      var timings = [0, 1000, 2000, 3000, 4000];
+
+      timings.forEach(function(t, i) {
+        var tid = setTimeout(function() {
+          document.getElementById('loadingText').textContent = texts[i];
+        }, t);
+        playTimeouts.push(tid);
+      });
+
+      // After 4.8s, trigger signup
+      var finalTid = setTimeout(function() {
+        overlay.style.display = 'none';
+        pb.style.animation = 'none';
+        playerState = 'idle';
+        document.getElementById('playBtn').style.opacity = '1';
+        document.getElementById('playBtn').style.pointerEvents = 'auto';
+        openModal();
+      }, 4800);
+      playTimeouts.push(finalTid);
+    }
+
+    // ==================== MODAL ====================
+    function openModal() {
+      var modal = document.getElementById('signupModal');
+      modal.style.display = 'flex';
+      document.getElementById('modalForm').style.display = 'block';
+      document.getElementById('modalSuccess').style.display = 'none';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('signupModal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    function handleSubmit() {
+      document.getElementById('modalForm').style.display = 'none';
+      document.getElementById('modalSuccess').style.display = 'flex';
+      setTimeout(function() {
+        closeModal();
+      }, 2500);
+    }
+    // Close on backdrop click
+    document.getElementById('signupModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+    // Close on Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // ==================== TOAST ====================
+    function showToast() {
+      if (toastDismissed) return;
+      var toast = document.getElementById('toast');
+      var data = toastData[toastIdx % toastData.length];
+      toastIdx++;
+      document.getElementById('toastAvatar').textContent = data.name.charAt(0);
+      document.getElementById('toastName').textContent = data.name;
+      document.getElementById('toastCity').textContent = data.city;
+      toast.style.display = 'block';
+      toast.className = 'toast-enter';
+    }
+    function dismissToast() {
+      toastDismissed = true;
+      var toast = document.getElementById('toast');
+      toast.className = 'toast-exit';
+      setTimeout(function() { toast.style.display = 'none'; }, 400);
+    }
+    // Auto-show every 22s, auto-hide after 4s
+    setTimeout(function() {
+      showToast();
+      toastInterval = setInterval(showToast, 22000);
+      toastTimer = setInterval(function() {
+        if (!toastDismissed && document.getElementById('toast').style.display === 'block') {
+          var toast = document.getElementById('toast');
+          toast.className = 'toast-exit';
+          setTimeout(function() { toast.style.display = 'none'; }, 400);
+        }
+      }, 4000);
+    }, 22000);
+
+    // ==================== RESPONSIVE FOOTER GRID ====================
+    (function() {
+      function adjustFooter() {
+        var brand = document.querySelector('.footer-brand');
+        if (brand) {
+          brand.style.gridColumn = window.innerWidth >= 768 ? 'span 1' : 'span 2';
+        }
+        var footerGrid = brand ? brand.parentElement : null;
+        if (footerGrid && window.innerWidth >= 768) {
+          footerGrid.style.gridTemplateColumns = 'repeat(4,1fr)';
+        }
+      }
+      adjustFooter();
+      window.addEventListener('resize', adjustFooter);
+    })();
+  </script>
+
+</body>
+</html>
