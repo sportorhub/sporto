@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <title>SportStream — Every Game. One Platform.</title>
+  <meta name="description" content="Watch live sports in 4K Ultra HD. Football, Cricket, UFC, Basketball, Baseball, MMA — all on one platform.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+    body{background:#06060a;color:#f0f0f5;font-family:'Inter',system-ui,-apple-system,sans-serif;overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+    a{text-decoration:none;color:inherit}button{font-family:inherit;cursor:pointer;border:none;outline:none}input{font-family:inherit;outline:none;-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#06060a}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.25)}
+
+    @keyframes f1{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(80px,-60px) scale(1.1)}50%{transform:translate(-40px,-120px) scale(.95)}75%{transform:translate(60px,-40px) scale(1.05)}}
+    @keyframes f2{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(-60px,80px) scale(1.08)}50%{transform:translate(100px,40px) scale(.92)}75%{transform:translate(-80px,-60px) scale(1.02)}}
+    @keyframes f3{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(50px,90px) scale(1.12)}66%{transform:translate(-70px,-30px) scale(.9)}}
+    @keyframes pg{0%,100%{opacity:1}50%{opacity:.5}}
+    @keyframes sl{0%{transform:translateY(-100%)}100%{transform:translate(500%)}}
+    @keyframes sp{to{transform:rotate(360deg)}}
+    @keyframes fi{from{opacity:0}to{opacity:1}}
+    @keyframes sir{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
+    @keyframes sor{from{transform:translateX(0);opacity:1}to{transform:translateX(120%);opacity:0}}
+    @keyframes cc{0%{stroke-dashoffset:166}100%{stroke-dashoffset:0}}
+    @keyframes cd{0%{stroke-dashoffset:48}100%{stroke-dashoffset:0}}
+    @keyframes pf{0%{width:0}15%{width:20%}40%{width:50%}65%{width:75%}85%{width:90%}100%{width:95%}}
+    @keyframes glowPulse{0%,100%{box-shadow:0 0 30px rgba(229,62,62,.3),0 0 60px rgba(128,90,213,.2),0 0 90px rgba(49,130,206,.15)}50%{box-shadow:0 0 40px rgba(229,62,62,.4),0 0 80px rgba(128,90,213,.3),0 0 120px rgba(49,130,206,.2)}}
+
+    .o1{animation:f1 18s ease-in-out infinite}.o2{animation:f2 22s ease-in-out infinite}.o3{animation:f3 15s ease-in-out infinite}
+    .pg{animation:pg 2s ease-in-out infinite}.spr{animation:sp 1s linear infinite}
+    .te{animation:sir .4s ease forwards}.tx{animation:sor .4s ease forwards}
+
+    .rv{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.16,1,.3,1)}.rv.on{opacity:1;transform:translateY(0)}
+
+    .gc{background:rgba(255,255,255,.04);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.08);border-radius:16px;transition:all .3s ease}
+    .gc:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14)}
+
+    .bs{height:48px;padding:0 32px;border-radius:12px;background:linear-gradient(135deg,#e53e3e,#c53030);color:#fff;font-weight:600;font-size:15px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;transition:all .3s ease;box-shadow:0 4px 20px rgba(229,62,62,.4);white-space:nowrap}
+    .bs:hover{background:linear-gradient(135deg,#fc5c5c,#e53e3e);box-shadow:0 6px 30px rgba(229,62,62,.5);transform:translateY(-1px)}
+    .bs:active{transform:translateY(0)}
+
+    .gbg{position:relative;border-radius:16px;padding:2px;background:linear-gradient(135deg,#e53e3e,#805ad5,#3182ce);animation:glowPulse 4s ease-in-out infinite}
+    .gbg>div{border-radius:14px;overflow:hidden;position:relative}
+
+    .sle{background:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0px,rgba(255,255,255,.03) 1px,transparent 1px,transparent 3px)}
+    .slm::after{content:'';position:absolute;top:0;left:0;right:0;height:120px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.04),transparent);animation:sl 4s linear infinite;pointer-events:none;z-index:2}
+
+    .mb{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);background:rgba(0,0,0,.7)}
+    .cc-a{stroke-dasharray:166;stroke-dashoffset:166;animation:cc .6s ease-in-out forwards}
+    .ck-a{stroke-dasharray:48;stroke-dashoffset:48;animation:cd .4s ease-in-out .4s forwards}
+    .pbf{height:100%;border-radius:4px;background:linear-gradient(to right,#e53e3e,#805ad5,#3182ce);animation:pf 4s cubic-bezier(.4,0,.2,1) forwards}
+
+    .cn{max-width:1152px;margin:0 auto;padding:0 16px}
+    @media(min-width:640px){.cn{padding:0 24px}}
+    @media(max-width:767px){.do{display:none!important}}
+    @media(min-width:768px){.mo{display:none!important}}
+
+    .play-circle{width:88px;height:88px;border-radius:50%;background:rgba(255,255,255,.12);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:2px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;transition:all .3s ease;box-shadow:0 0 40px rgba(229,62,62,.2),0 0 80px rgba(128,90,213,.15),0 0 120px rgba(49,130,206,.1)}
+    .play-circle:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4);box-shadow:0 0 60px rgba(229,62,62,.3),0 0 100px rgba(128,90,213,.2),0 0 140px rgba(49,130,206,.15);transform:scale(1.1)}
+    .vp-bg{background:linear-gradient(135deg,rgba(229,62,62,.15),rgba(128,90,213,.12),rgba(49,130,206,.1)),#000}
+  </style>
+</head>
+<body>
+
+  <div style="position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0" aria-hidden="true">
+    <div class="o1" style="position:absolute;top:-20%;left:-10%;width:600px;height:600px;border-radius:50%;background:rgba(220,38,38,.15);filter:blur(128px)"></div>
+    <div class="o2" style="position:absolute;top:30%;right:-15%;width:500px;height:500px;border-radius:50%;background:rgba(147,51,234,.15);filter:blur(128px)"></div>
+    <div class="o3" style="position:absolute;bottom:-10%;left:30%;width:550px;height:550px;border-radius:50%;background:rgba(37,99,235,.1);filter:blur(128px)"></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="nb" style="position:fixed;top:0;left:0;right:0;z-index:50;transition:all .3s ease">
+    <div class="cn" style="height:64px;display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:1.25rem;font-weight:700;background:linear-gradient(to right,#ef4444,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent">SportStream</div>
+      <div class="do" style="display:flex;align-items:center;gap:32px">
+        <a href="#sports" style="font-size:.875rem;color:rgba(255,255,255,.6);transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.6)'">Sports</a>
+        <a href="#live" style="font-size:.875rem;color:rgba(255,255,255,.6);transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.6)'">Live</a>
+        <a href="#features" style="font-size:.875rem;color:rgba(255,255,255,.6);transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.6)'">Features</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="bs do" style="font-size:.875rem" onclick="om()">Sign Up / Sign In</button>
+        <button class="mo" onclick="tm()" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(255,255,255,.05)">
+          <svg id="mi" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg id="ci" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mm" class="mo" style="display:none;background:rgba(0,0,0,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,.05)">
+      <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
+        <a href="#sports" onclick="cm()" style="font-size:.875rem;color:rgba(255,255,255,.7);padding:8px 0">Sports</a>
+        <a href="#live" onclick="cm()" style="font-size:.875rem;color:rgba(255,255,255,.7);padding:8px 0">Live</a>
+        <a href="#features" onclick="cm()" style="font-size:.875rem;color:rgba(255,255,255,.7);padding:8px 0">Features</a>
+        <button class="bs" style="font-size:.875rem;width:100%" onclick="cm();om()">Sign Up / Sign In</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="rv" style="padding:128px 16px 64px;text-align:center;position:relative;z-index:1">
+    <div style="max-width:768px;margin:0 auto">
+      <h1 style="font-size:clamp(2.25rem,6vw,4.5rem);font-weight:900;letter-spacing:-.02em;line-height:1.1;margin-bottom:24px">
+        <span style="background:linear-gradient(to right,#fff,#fff,rgba(255,255,255,.7));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Every Game.</span><br>
+        <span style="background:linear-gradient(to right,#ef4444,#a855f7,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent">One Platform.</span>
+      </h1>
+      <p style="font-size:clamp(1rem,2.5vw,1.25rem);color:rgba(255,255,255,.5);max-width:640px;margin:0 auto 32px">Stream live sports in stunning 4K Ultra HD. Football, Cricket, UFC, Basketball and more — all in one place.</p>
+      <button class="bs" style="font-size:1rem;padding:0 40px" onclick="om()">Sign Up / Sign In</button>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;margin-top:40px">
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span style="font-size:.875rem;color:rgba(255,255,255,.7)" id="hv">10,000 watching now</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>
+          <span style="font-size:.875rem;color:rgba(255,255,255,.7);font-weight:500">4K HDR</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span style="font-size:.875rem;color:rgba(255,255,255,.7)">99.9% Uptime</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO PLAYER -->
+  <section class="rv" style="padding:0 16px 64px;position:relative;z-index:1">
+    <div class="cn">
+      <div class="gbg">
+        <div id="vp" style="position:relative;aspect-ratio:16/9;cursor:pointer;overflow:hidden" class="sle slm vp-bg" onclick="hp()">
+          <div style="position:absolute;top:0;left:0;right:0;padding:16px;display:flex;align-items:flex-start;justify-content:space-between;z-index:5">
+            <div style="display:flex;gap:8px">
+              <div style="display:flex;align-items:center;gap:6px;background:#dc2626;padding:4px 10px;border-radius:6px;box-shadow:0 2px 8px rgba(220,38,38,.5)">
+                <span class="pg" style="width:8px;height:8px;border-radius:50%;background:#fff;display:inline-block"></span>
+                <span style="color:#fff;font-size:.75rem;font-weight:600;letter-spacing:.05em">LIVE</span>
+              </div>
+              <div style="padding:4px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05)">
+                <span style="color:rgba(255,255,255,.8);font-size:.75rem;font-weight:600;letter-spacing:.05em">4K UHD</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:4px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.05)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span style="color:rgba(255,255,255,.8);font-size:.75rem;font-weight:500" id="pv">10,000</span>
+            </div>
+          </div>
+          <div id="pb" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:4;transition:opacity .3s ease">
+            <div class="play-circle">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="white" style="margin-left:3px"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <p style="color:rgba(255,255,255,.5);font-size:.875rem;margin-top:16px;font-weight:400;letter-spacing:.03em">Click to watch live</p>
+          </div>
+          <div id="lo" style="position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:6;background:rgba(0,0,0,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)">
+            <div class="spr" style="width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.1);border-top-color:rgba(255,255,255,.8);margin-bottom:20px"></div>
+            <p id="lt" style="color:rgba(255,255,255,.9);font-size:.875rem;font-weight:500;margin-bottom:16px">Connecting to stream...</p>
+            <div style="width:192px;height:4px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden">
+              <div id="pr" class="pbf"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section class="rv" style="padding:0 16px 64px;position:relative;z-index:1">
+    <div class="cn">
+      <div class="gc" style="max-width:640px;margin:0 auto;padding:32px;text-align:center">
+        <h2 style="font-size:clamp(1.125rem,2.5vw,1.25rem);font-weight:600;color:#fff;margin-bottom:8px">Next Live Event Starts In</h2>
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:24px 0" id="cd">
+          <div style="text-align:center"><div class="cv" style="font-size:clamp(1.875rem,5vw,3rem);font-weight:700;color:#fff;font-variant-numeric:tabular-nums">00</div><div style="font-size:.75rem;color:rgba(255,255,255,.4);margin-top:4px;text-transform:uppercase;letter-spacing:.1em">Days</div></div>
+          <span style="font-size:clamp(1.5rem,4vw,1.875rem);font-weight:700;color:rgba(255,255,255,.2);margin-top:-16px">:</span>
+          <div style="text-align:center"><div class="cv" style="font-size:clamp(1.875rem,5vw,3rem);font-weight:700;color:#fff;font-variant-numeric:tabular-nums">00</div><div style="font-size:.75rem;color:rgba(255,255,255,.4);margin-top:4px;text-transform:uppercase;letter-spacing:.1em">Hours</div></div>
+          <span style="font-size:clamp(1.5rem,4vw,1.875rem);font-weight:700;color:rgba(255,255,255,.2);margin-top:-16px">:</span>
+          <div style="text-align:center"><div class="cv" style="font-size:clamp(1.875rem,5vw,3rem);font-weight:700;color:#fff;font-variant-numeric:tabular-nums">00</div><div style="font-size:.75rem;color:rgba(255,255,255,.4);margin-top:4px;text-transform:uppercase;letter-spacing:.1em">Min</div></div>
+          <span style="font-size:clamp(1.5rem,4vw,1.875rem);font-weight:700;color:rgba(255,255,255,.2);margin-top:-16px">:</span>
+          <div style="text-align:center"><div class="cv" style="font-size:clamp(1.875rem,5vw,3rem);font-weight:700;color:#fff;font-variant-numeric:tabular-nums">00</div><div style="font-size:.75rem;color:rgba(255,255,255,.4);margin-top:4px;text-transform:uppercase;letter-spacing:.1em">Sec</div></div>
+        </div>
+        <button class="bs" style="margin-bottom:12px" onclick="om()">Sign Up / Sign In</button>
+        <p style="font-size:.75rem;color:rgba(255,255,255,.3)">Join thousands of fans already streaming live sports</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <section class="rv" style="padding:0 16px 64px;position:relative;z-index:1">
+    <div class="cn">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
+        <div class="gc" style="padding:20px;text-align:center"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" style="margin:0 auto 12px;display:block"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><h3 style="font-size:.875rem;font-weight:600;color:#fff;margin-bottom:4px">4K Ultra HD</h3><p style="font-size:.75rem;color:rgba(255,255,255,.4)">Crystal clear streaming quality</p></div>
+        <div class="gc" style="padding:20px;text-align:center"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" style="margin:0 auto 12px;display:block"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><h3 style="font-size:.875rem;font-weight:600;color:#fff;margin-bottom:4px">Secure Access</h3><p style="font-size:.75rem;color:rgba(255,255,255,.4)">Enterprise-grade encryption</p></div>
+        <div class="gc" style="padding:20px;text-align:center"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" style="margin:0 auto 12px;display:block"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg><h3 style="font-size:.875rem;font-weight:600;color:#fff;margin-bottom:4px">Multi-Device</h3><p style="font-size:.75rem;color:rgba(255,255,255,.4)">Watch on any device</p></div>
+        <div class="gc" style="padding:20px;text-align:center"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" style="margin:0 auto 12px;display:block"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><h3 style="font-size:.875rem;font-weight:600;color:#fff;margin-bottom:4px">Zero Lag</h3><p style="font-size:.75rem;color:rgba(255,255,255,.4)">Ultra-low latency streams</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPORT CATEGORIES -->
+  <section id="sports" class="rv" style="padding:0 16px 64px;position:relative;z-index:1">
+    <div class="cn">
+      <h2 style="font-size:clamp(1.5rem,4vw,1.875rem);font-weight:700;color:#fff;text-align:center;margin-bottom:40px">Browse by Sport</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px" id="sg"></div>
+    </div>
+  </section>
+
+  <!-- LIVE EVENTS -->
+  <section id="live" class="rv" style="padding:0 16px 64px;position:relative;z-index:1">
+    <div class="cn">
+      <h2 style="font-size:clamp(1.5rem,4vw,1.875rem);font-weight:700;color:#fff;text-align:center;margin-bottom:40px">Live &amp; Upcoming</h2>
+      <div style="display:grid;grid-template-columns:1fr;gap:16px" id="le"></div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="rv" style="padding:0 16px 64px;position:relative;z-index:1">
+    <div class="cn">
+      <h2 style="font-size:clamp(1.5rem,4vw,1.875rem);font-weight:700;color:#fff;text-align:center;margin-bottom:40px">Why SportStream?</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px" id="fg"></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="rv" style="padding:0 16px 64px;position:relative;z-index:1">
+    <div class="cn" style="max-width:768px">
+      <div class="gc" style="padding:clamp(40px,8vw,56px);text-align:center;position:relative;overflow:hidden">
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(220,38,38,.05),rgba(168,85,247,.05),rgba(59,130,246,.05));pointer-events:none"></div>
+        <div style="position:relative;z-index:2">
+          <h2 style="font-size:clamp(1.875rem,5vw,3rem);font-weight:800;color:#fff;margin-bottom:16px">Ready to Watch?</h2>
+          <p style="font-size:clamp(1rem,2.5vw,1.125rem);color:rgba(255,255,255,.5);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto">Join millions of fans streaming live sports in stunning quality.</p>
+          <button class="bs" style="font-size:1rem;padding:0 40px;margin-bottom:16px" onclick="om()">Sign Up / Sign In</button>
+          <p style="font-size:.75rem;color:rgba(255,255,255,.3)">Limited spots available for premium access</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.05);padding:48px 16px 32px">
+    <div class="cn">
+      <div id="ftg" style="display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-bottom:40px">
+        <div id="fb" style="grid-column:span 2">
+          <div style="font-size:1.125rem;font-weight:700;background:linear-gradient(to right,#ef4444,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px">SportStream</div>
+          <p style="font-size:.875rem;color:rgba(255,255,255,.4);line-height:1.6">The ultimate platform for live sports streaming.</p>
+        </div>
+        <div><h4 style="font-size:.875rem;font-weight:600;color:#fff;margin-bottom:12px">Sports</h4><ul id="sfl" style="list-style:none;display:flex;flex-direction:column;gap:8px"></ul></div>
+        <div><h4 style="font-size:.875rem;font-weight:600;color:#fff;margin-bottom:12px">Company</h4><ul id="cfl" style="list-style:none;display:flex;flex-direction:column;gap:8px"></ul></div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,.05);padding-top:24px;display:flex;flex-direction:column;align-items:center;gap:16px">
+        <div style="display:flex;align-items:center;gap:16px">
+          <a href="#" style="color:rgba(255,255,255,.3)" onmouseover="this.style.color='rgba(255,255,255,.6)'" onmouseout="this.style.color='rgba(255,255,255,.3)'"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" style="color:rgba(255,255,255,.3)" onmouseover="this.style.color='rgba(255,255,255,.6)'" onmouseout="this.style.color='rgba(255,255,255,.3)'"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="#" style="color:rgba(255,255,255,.3)" onmouseover="this.style.color='rgba(255,255,255,.6)'" onmouseout="this.style.color='rgba(255,255,255,.3)'"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+          <a href="#" style="color:rgba(255,255,255,.3)" onmouseover="this.style.color='rgba(255,255,255,.6)'" onmouseout="this.style.color='rgba(255,255,255,.3)'"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+        </div>
+        <p style="font-size:.75rem;color:rgba(255,255,255,.3)">&copy; <span id="fy"></span> SportStream. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST -->
+  <div id="tst" style="display:none;position:fixed;bottom:24px;right:24px;z-index:90">
+    <div class="gc" style="padding:12px 8px 12px 12px;display:flex;align-items:center;gap:12px;max-width:320px">
+      <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#a855f7);display:flex;align-items:center;justify-content:center;flex-shrink:0"><span id="ta" style="color:#fff;font-size:12px;font-weight:700">J</span></div>
+      <p style="font-size:.875rem;color:rgba(255,255,255,.7);line-height:1.4"><span id="tn" style="font-weight:600;color:#fff">John</span> from <span id="tc">London</span> just signed up</p>
+      <button onclick="dt()" style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.05);flex-shrink:0;border:none;cursor:pointer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div id="sm" style="display:none;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center" class="mb">
+    <div id="si" style="position:relative;width:100%;max-width:420px;margin:16px;background:rgba(255,255,255,.04);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:32px" onclick="event.stopPropagation()">
+      <button onclick="cm2()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.05);border:none;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <div id="mf">
+        <div style="text-align:center;margin-bottom:20px"><div style="font-size:1.5rem;font-weight:700;background:linear-gradient(to right,#ef4444,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent">SportStream</div></div>
+        <div style="text-align:center;margin-bottom:20px"><h3 style="font-size:1.125rem;font-weight:600;color:#fff">Sign Up / Sign In</h3></div>
+        <button onclick="hs()" style="width:100%;height:48px;border-radius:8px;background:#fff;color:#111;font-weight:500;font-size:.875rem;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;transition:background .2s" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='#fff'">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Continue with Google
+        </button>
+        <button onclick="hs()" style="width:100%;height:48px;border-radius:8px;background:#fff;color:#111;font-weight:500;font-size:.875rem;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px;transition:background .2s" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='#fff'">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+          Continue with Apple
+        </button>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><div style="flex:1;height:1px;background:rgba(255,255,255,.1)"></div><span style="font-size:.75rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em">or use email</span><div style="flex:1;height:1px;background:rgba(255,255,255,.1)"></div></div>
+        <div style="margin-bottom:12px"><label style="display:block;font-size:.875rem;color:rgba(255,255,255,.6);margin-bottom:6px">Email</label><input type="email" placeholder="you@example.com" style="width:100%;height:48px;padding:0 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:.875rem;transition:border-color .2s" onfocus="this.style.borderColor='rgba(255,255,255,.25)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"></div>
+        <div style="margin-bottom:20px"><label style="display:block;font-size:.875rem;color:rgba(255,255,255,.6);margin-bottom:6px">Password</label><input type="password" placeholder="Enter your password" style="width:100%;height:48px;padding:0 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:.875rem;transition:border-color .2s" onfocus="this.style.borderColor='rgba(255,255,255,.25)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"></div>
+        <button onclick="hs()" class="bs" style="width:100%;margin-bottom:16px">Sign Up / Sign In</button>
+        <p style="text-align:center;font-size:.75rem;color:rgba(255,255,255,.3);line-height:1.6">By continuing, you agree to our <a href="#" style="color:rgba(255,255,255,.5);text-decoration:underline">Terms of Service</a> and <a href="#" style="color:rgba(255,255,255,.5);text-decoration:underline">Privacy Policy</a></p>
+      </div>
+      <div id="ms" style="display:none;flex-direction:column;align-items:center;justify-content:center;padding:32px 0">
+        <svg width="80" height="80" viewBox="0 0 52 52" style="margin-bottom:20px"><circle class="cc-a" cx="26" cy="26" r="25" fill="none" stroke="#22c55e" stroke-width="2"/><path class="ck-a" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
+        <p style="font-size:1.25rem;font-weight:600;color:#fff">Welcome aboard!</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    // DATA
+    var vc=10000,ps='idle',mso=false,td=false,ti=0;
+    var tData=[{n:'John',c:'London'},{n:'Sarah',c:'New York'},{n:'Mike',c:'Tokyo'},{n:'Emma',c:'Sydney'},{n:'Carlos',c:'Madrid'},{n:'Aisha',c:'Dubai'},{n:'Liam',c:'Dublin'},{n:'Priya',c:'Mumbai'}];
+    var sports=[
+      {n:'Football',g:'linear-gradient(135deg,#22c55e,#059669)',l:3,m:142},
+      {n:'Cricket',g:'linear-gradient(135deg,#14b8a6,#0f766e)',l:2,m:98},
+      {n:'UFC',g:'linear-gradient(135deg,#ef4444,#991b1b)',l:1,m:36},
+      {n:'Basketball',g:'linear-gradient(135deg,#f97316,#c2410c)',l:4,m:186},
+      {n:'Baseball',g:'linear-gradient(135deg,#3b82f6,#1d4ed8)',l:2,m:124},
+      {n:'MMA',g:'linear-gradient(135deg,#a855f7,#7c3aed)',l:1,m:48}
+    ];
+    var leData=[
+      {s:'Football',st:'live',v:4231},{s:'UFC',st:'live',v:8542},{s:'Cricket',st:'live',v:6109},{s:'Basketball',st:'upcoming',t:'Starts in 2h 15m'}
+    ];
+    var featData=[
+      {t:'Instant Access',d:'Start watching in seconds. No downloads, no waiting.'},
+      {t:'Multi-View',d:'Watch up to 4 games simultaneously on any screen.'},
+      {t:'DVR & Replays',d:'Never miss a moment with full DVR and instant replays.'},
+      {t:'Real-Time Stats',d:'Live scores, stats, and analytics while you watch.'},
+      {t:'Multi-Language',d:'Commentary in 20+ languages for every major event.'},
+      {t:'Cast Anywhere',d:'Stream to TV, phone, tablet, or any connected device.'}
+    ];
+
+    // BUILD SECTIONS
+    var sg=document.getElementById('sg'),leEl=document.getElementById('le'),fg=document.getElementById('fg');
+    sports.forEach(function(sp){
+      sg.innerHTML+='<div style="position:relative;border-radius:16px;overflow:hidden;cursor:pointer;min-height:180px;transition:transform .3s ease" onmouseover="this.style.transform=\'scale(1.02)\'" onmouseout="this.style.transform=\'scale(1)\'"><div style="position:absolute;inset:0;background:'+sp.g+'"></div><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8),rgba(0,0,0,.2))"></div><div style="position:relative;z-index:2;padding:24px;height:100%;display:flex;flex-direction:column;justify-content:flex-end"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg><div style="display:flex;align-items:center;gap:6px;background:#dc2626;padding:2px 8px;border-radius:4px"><span class="pg" style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block"></span><span style="font-size:11px;font-weight:600;color:#fff">'+sp.l+' Live</span></div></div><h3 style="font-size:1.25rem;font-weight:700;color:#fff">'+sp.n+'</h3><p style="font-size:.875rem;color:rgba(255,255,255,.6);margin-top:4px">'+sp.m+' this month</p></div></div>';
+    });
+    var eyeSvg='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+    leData.forEach(function(ev){
+      var badge=ev.st==='live'?'<span style="display:flex;align-items:center;gap:4px;background:#dc2626;padding:2px 8px;border-radius:4px"><span class="pg" style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block"></span><span style="font-size:11px;font-weight:600;color:#fff">LIVE</span></span>':'<span style="background:rgba(255,255,255,.1);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;color:rgba(255,255,255,.7)">UPCOMING</span>';
+      var info=ev.st==='live'?ev.v.toLocaleString()+' watching':ev.t;
+      leEl.innerHTML+='<div class="gc" style="padding:24px;display:flex;align-items:center;gap:16px"><div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:.875rem;font-weight:600;color:#fff">'+ev.s+'</span>'+badge+'</div><p style="font-size:.875rem;color:rgba(255,255,255,.4)">'+info+'</p></div>'+eyeSvg+'</div>';
+    });
+    var fIcons=['<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>','<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>','<polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>','<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>','<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>','<path d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"/><line x1="2" y1="20" x2="2.01" y2="20"/>'];
+    featData.forEach(function(f,i){
+      fg.innerHTML+='<div class="gc" style="padding:24px"><div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(168,85,247,.2));display:flex;align-items:center;justify-content:center;margin-bottom:16px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2">'+fIcons[i]+'</svg></div><h3 style="font-size:1rem;font-weight:600;color:#fff;margin-bottom:8px">'+f.t+'</h3><p style="font-size:.875rem;color:rgba(255,255,255,.45);line-height:1.6">'+f.d+'</p></div>';
+    });
+    ['Football','Cricket','UFC','Basketball','Baseball','MMA'].forEach(function(s){
+      document.getElementById('sfl').innerHTML+='<li><a href="#" style="font-size:.875rem;color:rgba(255,255,255,.4);transition:color .2s" onmouseover="this.style.color=\'rgba(255,255,255,.7)\'" onmouseout="this.style.color=\'rgba(255,255,255,.4)\'">'+s+'</a></li>';
+    });
+    ['About','Careers','Press','Blog'].forEach(function(s){
+      document.getElementById('cfl').innerHTML+='<li><a href="#" style="font-size:.875rem;color:rgba(255,255,255,.4);transition:color .2s" onmouseover="this.style.color=\'rgba(255,255,255,.7)\'" onmouseout="this.style.color=\'rgba(255,255,255,.4)\'">'+s+'</a></li>';
+    });
+    document.getElementById('fy').textContent=new Date().getFullYear();
+
+    // VIEWER COUNT
+    setInterval(function(){vc=Math.floor(9500+Math.random()*1000);document.getElementById('hv').textContent=vc.toLocaleString()+' watching now';document.getElementById('pv').textContent=vc.toLocaleString()},3000);
+
+    // SCROLL NAVBAR
+    window.addEventListener('scroll',function(){var n=document.getElementById('nb');if(window.scrollY>20){n.style.background='rgba(0,0,0,.6)';n.style.backdropFilter='blur(24px)';n.style.webkitBackdropFilter='blur(24px)';n.style.borderBottom='1px solid rgba(255,255,255,.05)'}else{n.style.background='transparent';n.style.backdropFilter='none';n.style.webkitBackdropFilter='none';n.style.borderBottom='none'}},{passive:true});
+
+    // SCROLL REVEAL
+    var obs=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting)en.target.classList.add('on')})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
+
+    // COUNTDOWN
+    var tgt=new Date();tgt.setDate(tgt.getDate()+2);tgt.setHours(tgt.getHours()+5);tgt.setMinutes(tgt.getMinutes()+23);
+    var cvs=document.querySelectorAll('.cv');
+    function tick(){var d=Math.max(0,tgt.getTime()-Date.now()),D=Math.floor(d/864e5),H=Math.floor(d%864e5/36e5),M=Math.floor(d%36e5/6e4),S=Math.floor(d%6e4/1e3);cvs[0].textContent=String(D).padStart(2,'0');cvs[1].textContent=String(H).padStart(2,'0');cvs[2].textContent=String(M).padStart(2,'0');cvs[3].textContent=String(S).padStart(2,'0')}
+    tick();setInterval(tick,1000);
+
+    // MOBILE MENU
+    window.tm=function(){mso=!mso;document.getElementById('mm').style.display=mso?'block':'none';document.getElementById('mi').style.display=mso?'none':'block';document.getElementById('ci').style.display=mso?'block':'none'};
+    window.cm=function(){mso=false;document.getElementById('mm').style.display='none';document.getElementById('mi').style.display='block';document.getElementById('ci').style.display='none'};
+
+    // VIDEO PLAYER
+    var pto=[];
+    window.hp=function(){
+      if(ps!=='idle')return;ps='connecting';
+      document.getElementById('pb').style.opacity='0';document.getElementById('pb').style.pointerEvents='none';
+      var ol=document.getElementById('lo');ol.style.display='flex';
+      var pb=document.getElementById('pr');pb.style.animation='none';pb.offsetHeight;pb.style.animation='pf 4s cubic-bezier(.4,0,.2,1) forwards';
+      var tx=['Connecting to stream...','Verifying access...','Loading player...','Almost ready...','Sign in required to continue'];
+      [0,1000,2000,3000,4000].forEach(function(t,i){pto.push(setTimeout(function(){document.getElementById('lt').textContent=tx[i]},t))});
+      pto.push(setTimeout(function(){ol.style.display='none';pb.style.animation='none';ps='idle';document.getElementById('pb').style.opacity='1';document.getElementById('pb').style.pointerEvents='auto';om()},4800));
+    };
+
+    // MODAL
+    window.om=function(){document.getElementById('sm').style.display='flex';document.getElementById('mf').style.display='block';document.getElementById('ms').style.display='none';document.body.style.overflow='hidden'};
+    window.cm2=function(){document.getElementById('sm').style.display='none';document.body.style.overflow=''};
+    window.hs=function(){document.getElementById('mf').style.display='none';document.getElementById('ms').style.display='flex';setTimeout(cm2,2500)};
+    document.getElementById('sm').addEventListener('click',function(e){if(e.target===this)cm2()});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')cm2()});
+
+    // TOAST
+    window.dt=function(){td=true;var t=document.getElementById('tst');t.className='tx';setTimeout(function(){t.style.display='none'},400)};
+    setTimeout(function(){
+      function st(){if(td)return;var d=tData[ti%tData.length];ti++;document.getElementById('ta').textContent=d.n.charAt(0);document.getElementById('tn').textContent=d.n;document.getElementById('tc').textContent=d.c;document.getElementById('tst').style.display='block';document.getElementById('tst').className='te'}
+      st();setInterval(st,22000);setInterval(function(){if(!td&&document.getElementById('tst').style.display==='block'){document.getElementById('tst').className='tx';setTimeout(function(){document.getElementById('tst').style.display='none'},400)}},4000);
+    },22000);
+
+    // FOOTER RESPONSIVE
+    function af(){var b=document.getElementById('fb');if(b)b.style.gridColumn=window.innerWidth>=768?'span 1':'span 2';var g=document.getElementById('ftg');if(g&&window.innerWidth>=768)g.style.gridTemplateColumns='repeat(4,1fr)'}
+    af();window.addEventListener('resize',af);
+  })();
+
+  // ========== CODE PROTECTION ==========
+  document.addEventListener('contextmenu',function(e){e.preventDefault();return false});
+  document.addEventListener('selectstart',function(e){if(e.target.tagName!=='INPUT')e.preventDefault();return false});
+  document.addEventListener('dragstart',function(e){e.preventDefault();return false});
+  document.addEventListener('copy',function(e){e.preventDefault();return false});
+  document.addEventListener('cut',function(e){e.preventDefault();return false});
+  document.addEventListener('keydown',function(e){
+    if(e.ctrlKey&&(e.keyCode===85||e.keyCode===83||e.keyCode===74||e.keyCode===65||e.keyCode===67||e.shiftKey&&e.keyCode===73)){e.preventDefault();return false}
+    if(e.keyCode===123||e.keyCode===122){e.preventDefault();return false}
+  });
+  </script>
+</body>
+</html>
